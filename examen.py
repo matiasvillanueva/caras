@@ -97,8 +97,8 @@ Y_col = Y.shape[1]
 
 arquitectura = {
    "input_size" : X_col,
-   "layers_qty" : 2, # incluye la capa de salida, pero no la de entrada
-   "layers_size" : [ 32, Y_col],
+   "layers_qty" : 3, # incluye la capa de salida, pero no la de entrada
+   "layers_size" : [ 40, 20, Y_col],
    "layers_func" : ['logsig','logsig','logsig'],
 }
 
@@ -139,13 +139,13 @@ for i in range(niveles):
 # controles del entrenamiento
 
 # Limite de lo que estoy dispuesto a trabajar
-epoch_limit = 3000    # para terminar si no converge
+epoch_limit = 5000    # para terminar si no converge
 
 # cuando la mejora del error sea inferior a este valor, me detendré
-error_delta_umbral = 1.0e-07
+error_delta_umbral = 1.0e-08
 
 # controla la velocidad de convergencia
-learning_rate = 0.04
+learning_rate = 0.05
 
 
 # inicializaciones del bucle principal del backpropagation
@@ -250,8 +250,8 @@ print("Para converger hicieron falta epochs=",epoch)
 
 
 # imprimo los niveles de la red
-#for i in range(red["arq"]["layers_qty"]):
-#  print( red["layer"][i])
+for i in range(red["arq"]["layers_qty"]):
+  print( red["layer"][i])
 
 
 # calculo la salida de la red
@@ -280,7 +280,7 @@ for fila in range(X_row):
     conf = float(salida[pred_idx, 0])
     ok = (pred == real)
     if ok: aciertos += 1
-    #print(f"{fila}\t{real:12s}\t{pred:12s}\t{conf:.4f}\t{'ok' if ok else 'FAIL'}")
+    print(f"{fila}\t{real:12s}\t{pred:12s}\t{conf:.4f}\t{'ok' if ok else 'FAIL'}")
 
 print(f"\nAccuracy training: {aciertos}/{X_row} = {aciertos/X_row*100:.2f}%")
 
